@@ -19,4 +19,5 @@ public interface ReservationRepository extends JpaRepository<Reservation,Integer
             @Param("startTime") LocalDateTime startTime,
             @Param("endTime") LocalDateTime endTime
     );
+    boolean existsByVirtualMachine(VirtualMachine virtualMachine);
 }

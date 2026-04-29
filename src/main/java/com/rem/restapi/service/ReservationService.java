@@ -21,6 +21,8 @@ public class ReservationService {
     @Autowired
     private VirtualMachineRepository vmRepository;
 
+
+
     public Reservation bookVirtualMachine(int studentId, int vmId, LocalDateTime startTime, LocalDateTime endTime) {
 
 
