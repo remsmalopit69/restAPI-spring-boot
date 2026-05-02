@@ -1,6 +1,7 @@
 package com.rem.restapi.service;
 
 import com.rem.restapi.entity.VirtualMachine;
+import com.rem.restapi.exception.ResourceNotFoundException;
 import com.rem.restapi.repository.ReservationRepository;
 import com.rem.restapi.repository.VirtualMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,10 @@ public class VirtualMachineService {
         virtualMachine.setStatus(status);
 
         return virtualMachineRepository.save(virtualMachine);
+    }
+
+    public VirtualMachine getVmError(int id) {
+        VirtualMachine virtualMachine = virtualMachineRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Virtual Machine " + id + " not found"));
+        return virtualMachine;
     }
 }

@@ -1,6 +1,7 @@
 package com.rem.restapi.service;
 
 import com.rem.restapi.entity.Student;
+import com.rem.restapi.exception.ResourceNotFoundException;
 import com.rem.restapi.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,12 +21,17 @@ public class StudentService {
     public Student updateStudent(int id,String newName, String newDepartment, float newPercentage) {
 
         Student student = studentRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("Student not Found"));
+                .orElseThrow(()->new ResourceNotFoundException("Student ID: " + id + " not found"));
 
         student.setName(newName);
         student.setDepartment(newDepartment);
         student.setPercentage(newPercentage);
 
         return studentRepository.save(student);
+    }
+
+    public Student getStudentError(int id) {
+        Student student = studentRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Student ID: " + id + " not found"));
+        return student;
     }
 }

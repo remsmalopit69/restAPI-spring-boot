@@ -35,8 +35,13 @@ public class StudentController {
 
     @GetMapping("/students/{student_number}")//fetching data
     public Student getStudent(@PathVariable int student_number) {
-        return repository.findById(student_number).get();//used repository with findByID method
+        return studentService.getStudentError(student_number);//used repository with findByID method
     }
+
+//    @GetMapping("/students/{student_number}")//fetching data
+//    public Student getStudent(@PathVariable int student_number) {
+//        return repository.findById(student_number).get();//used repository with findByID method
+//    }
 
     @PostMapping("/students/add")//adding data
     @ResponseStatus(code = HttpStatus.CREATED)
@@ -53,25 +58,18 @@ public class StudentController {
 //        return student;
 //    }
 @PutMapping("/students/update/{id}")
-public ResponseEntity<?> updateStudent(
+public ResponseEntity<Student> updateStudent(
         @PathVariable int id,
         @RequestBody UpdateStudentRequest updateRequest) {
 
-    try {
-        Student updatedStudent = studentService.updateStudent(
-                id,
-                updateRequest.name,
-                updateRequest.department,
-                updateRequest.percentage
-        );
+    Student updatedStudent = studentService.updateStudent(
+            id,
+            updateRequest.name,
+            updateRequest.department,
+            updateRequest.percentage
+    );
 
-        return ResponseEntity.ok(updatedStudent);
-
-    } catch (RuntimeException e) {
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(e.getMessage());
-    }
+    return ResponseEntity.ok(updatedStudent);
 }
 
     @DeleteMapping("students/{id}")//deleting

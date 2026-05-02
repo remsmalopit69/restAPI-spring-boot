@@ -40,6 +40,10 @@ public class VirtualMachineController {
         List<VirtualMachine> virtualMachines = virtualMachineRepository.findAll();
         return virtualMachines;
     }
+    @GetMapping("vms/{id}")
+    public VirtualMachine getVirtualMachine(@PathVariable int id) {
+        return virtualMachineService.getVmError(id);
+    }
 
     @PutMapping("vms/update/{id}")
     public ResponseEntity<?> updateVm(@PathVariable int id, @RequestBody UpdateVirtualMachineRequest updateVirtualMachineRequest) {
